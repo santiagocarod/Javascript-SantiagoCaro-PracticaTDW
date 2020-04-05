@@ -112,11 +112,34 @@ function printUser() {
     var title = document.getElementById("title");
     var user = JSON.parse(window.localStorage.getItem("loggedIn"));
     if (user != null) {
+        var div1 = document.createElement("div");
+        title.appendChild(div1);
+        div1.setAttribute("class","container");
+
+        var div2 = document.createElement("div");
+        div1.appendChild(div2)
+        div2.setAttribute("class","row");
+
+        var divWelcome = document.createElement("div");
+        div2.appendChild(divWelcome);
+        divWelcome.setAttribute("class","col-sm");
+
         var role = user.type;
         var username = user.name;
         var welcomeMessage = document.createElement("h5");
-        title.appendChild(welcomeMessage);
+        divWelcome.appendChild(welcomeMessage);
         welcomeMessage.innerHTML = "<b>Bienvenido </b>" + username + ", " + role;
+
+        var divButton = document.createElement("div");
+        div2.appendChild(divButton);
+        divButton.setAttribute("class","col-sm");
+        var form = document.createElement("form")
+        divButton.appendChild(form);
+        form.setAttribute("onsubmit","return logout();");
+        var logOutButton = document.createElement("button");
+        form.appendChild(logOutButton);
+        logOutButton.setAttribute("class","btn btn-secondary float-right");
+        logOutButton.innerHTML="Salir";
     }
 }
 
@@ -152,7 +175,9 @@ function validateUser(data, username, password) {
 }
 
 function logout() {
+    location = "index.html";
     window.localStorage.setItem("loggedIn", null);
+    return false;
 }
 
 function listTables() {
@@ -193,4 +218,78 @@ function displayItems(collection, type) {
         tableRow.appendChild(tableData);
         tableData.innerHTML = item.name;
     }
+}
+
+
+function listTablesReader() {
+    var data = JSON.parse(window.localStorage.getItem("data"));
+    displayItemsReader(data.people, "people");
+    displayItemsReader(data.entities, "entities");
+    displayItemsReader(data.products, "products");
+}
+
+function displayItemsReader(collection, type) {
+    var column = document.getElementById(type + "Column");
+    var table = document.createElement("table");
+    table.setAttribute("id", type + "Table");
+    table.setAttribute("class", "table");
+    column.appendChild(table);
+    var tableHeader = document.createElement("thead");
+    table.appendChild(tableHeader);
+    tableHeader.setAttribute("class", "thead-dark");
+    var tableRow = document.createElement("tr");
+    tableHeader.appendChild(tableRow);
+    var header = document.createElement("th");
+    tableRow.appendChild(header);
+    header.setAttribute("scope", "col");
+    if (type == "people") {
+        var title = "Personas";
+    } else if (type == "entities") {
+        var title = "Entidades";
+    } else {
+        var title = "Productos";
+    }
+    header.innerHTML = title;
+    var tableBody = document.createElement("tbody");
+    table.appendChild(tableBody);
+    for (item of collection) {
+        var tableRow = document.createElement("tr")
+        tableBody.appendChild(tableRow);
+        var tableData = document.createElement("td");
+        tableRow.appendChild(tableData);
+        var link = document.createElement("a");
+        tableData.appendChild(link);
+        link.setAttribute("href","/displayItem.html?id="+item.id);
+        link.innerHTML = item.name;
+    }
+}
+
+function searchItemId(code){
+    var data = JSON.parse(window.localStorage.getItem("data"));
+    var collection;
+    if (code[0]=='p'){
+        collection = data.people;
+    }else if (code[0]=='e'){
+        collection= data.entities;
+    }else{
+        collection=data.products;
+    }
+
+    for (item of collection){
+        if(item.id ==code){
+            return item;
+        }
+    }
+    return null;
+
+}
+
+function printItem(){
+    var body = document.getElementById("body");
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('id');
+    var h1 = document.createElement("h1");
+    body.appendChild(h1);
+    h1.innerHTML = searchItemId(code).name;
+
 }
