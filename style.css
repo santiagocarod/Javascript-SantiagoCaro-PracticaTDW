@@ -1,3 +1,7 @@
 * {
     font-family: Quicksand;
 }
+
+.btn-img{
+    cursor: pointer;
+}

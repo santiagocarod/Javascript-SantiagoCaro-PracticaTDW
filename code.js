@@ -26,7 +26,6 @@ function load() {
             },
         ],
         people: [{
-                id: "p01",
                 name: "Tim Berners-Lee",
                 date: "8 de Junio de 1955",
                 picture: "https://s2.latercera.com/wp-content/uploads/2018/12/Tim.jpg",
@@ -35,7 +34,6 @@ function load() {
 
             },
             {
-                id: "p02",
                 name: "Richard Stallman",
                 date: "16 de Marzo 1953",
                 picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS7x0V2_5oVEfi3gW6P8PhAxkdXZMJKK-Qo-xRoKuB6Xb_K5fuE",
@@ -45,7 +43,6 @@ function load() {
             },
         ],
         entities: [{
-                id: "e01",
                 name: "World Wide Web Consortium",
                 date: "1 de Octubre de 1994",
                 picture: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2018/10/18/w3c_logo-800x400.jpg",
@@ -54,7 +51,6 @@ function load() {
 
             },
             {
-                id: "e02",
                 name: "Free Software Fundation",
                 date: "14 de Octubre de 1985",
                 picture: "https://pbs.twimg.com/profile_images/471735621946314752/imENUbEK_400x400.png",
@@ -64,7 +60,6 @@ function load() {
             },
         ],
         products: [{
-                id: "r01",
                 name: "HyperText Markup Language",
                 date: "1993",
                 picture: "https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png",
@@ -73,7 +68,6 @@ function load() {
 
             },
             {
-                id: "r02",
                 name: "GNU / Linux",
                 date: "17 de Septiembre 1991",
                 picture: "https://www.wallpaperflare.com/static/893/596/940/tux-linux-foxyriot-logo-wallpaper.jpg",
@@ -83,7 +77,40 @@ function load() {
             },
         ]
     }
+    calculateID(data);
     window.localStorage.setItem("data", JSON.stringify(data));
+    location = "index.html";
+    return false;
+}
+
+function calculateID(data) {
+    var count = 0;
+    for (item of data.people) {
+        var id = "p";
+        if (count < 10) {
+           id = id+"0";
+        }
+        item["id"]=id+count;
+        count = count+1;
+    }
+    count = 0;
+    for (item of data.entities) {
+        var id = "e";
+        if (count < 10) {
+           id = id+"0";
+        }
+        item["id"]=id+count;
+        count = count+1;
+    }
+    count = 0;
+    for (item of data.products) {
+        var id = "r";
+        if (count < 10) {
+           id = id+"0";
+        }
+        item["id"]=id+count;
+        count = count+1;
+    }
 }
 
 function logged() {
@@ -121,7 +148,7 @@ function printUser() {
     homeButton.setAttribute("class", "btn btn-secondary")
     if (user != null) {
         homeButton.setAttribute("onclick", "location.href=\"writer.html\"")
-   
+
         var divWelcome = document.createElement("div");
         div2.appendChild(divWelcome);
         divWelcome.setAttribute("class", "col-sm");
@@ -142,8 +169,7 @@ function printUser() {
         form.appendChild(logOutButton);
         logOutButton.setAttribute("class", "btn btn-secondary float-right");
         logOutButton.innerHTML = "Salir";
-    }
-    else{
+    } else {
         homeButton.setAttribute("onclick", "location.href=\"index.html\"")
     }
 }
@@ -225,6 +251,70 @@ function displayItemsReader(collection, type) {
     }
 }
 
+function listTablesWriter() {
+    var data = JSON.parse(window.localStorage.getItem("data"));
+    displayItemsWriter(data.people, "people");
+    displayItemsWriter(data.entities, "entities");
+    displayItemsWriter(data.products, "products");
+}
+
+function displayItemsWriter(collection, type) {
+    var column = document.getElementById(type + "Column");
+    var table = document.createElement("table");
+    table.setAttribute("id", type + "Table");
+    table.setAttribute("class", "table");
+    column.appendChild(table);
+    var tableHeader = document.createElement("thead");
+    table.appendChild(tableHeader);
+    tableHeader.setAttribute("class", "thead-dark");
+    var tableRow = document.createElement("tr");
+    tableHeader.appendChild(tableRow);
+    var header = document.createElement("th");
+    header.setAttribute("colspan", "3");
+    tableRow.appendChild(header);
+    header.setAttribute("scope", "col");
+    if (type == "people") {
+        var title = "Personas";
+    } else if (type == "entities") {
+        var title = "Entidades";
+    } else {
+        var title = "Productos";
+    }
+    header.innerHTML = title;
+    var tableBody = document.createElement("tbody");
+    table.appendChild(tableBody);
+    for (item of collection) {
+        var tableRow = document.createElement("tr")
+        tableBody.appendChild(tableRow);
+
+
+        var tableData = document.createElement("td");
+        tableRow.appendChild(tableData);
+        var link = document.createElement("a");
+        tableData.appendChild(link);
+        link.setAttribute("href", "/displayItem.html?id=" + item.id);
+        link.innerHTML = item.name;
+
+        var updateData = document.createElement("td");
+        tableRow.appendChild(updateData);
+        var updateButton = document.createElement("img");
+        updateData.appendChild(updateButton);
+        updateButton.setAttribute("src", "https://image.flaticon.com/icons/png/512/84/84380.png");
+        updateButton.setAttribute("width", "20");
+        updateButton.setAttribute("class", "btn-img");
+        updateButton.setAttribute("onclick", "location.href=\"edit.html?id=" + item.id + "\"")
+
+        var deleteData = document.createElement("td");
+        tableRow.appendChild(deleteData);
+        var deleteButton = document.createElement("img");
+        deleteData.appendChild(deleteButton);
+        deleteButton.setAttribute("src", "https://vectorified.com/images/delete-icon-png-1.png");
+        deleteButton.setAttribute("width", "20");
+        deleteButton.setAttribute("class", "btn-img");
+        deleteButton.setAttribute("onclick", "location.href=\"delete.html?id=" + item.id + "\"")
+    }
+}
+
 function searchItemId(code) {
     var data = JSON.parse(window.localStorage.getItem("data"));
     var collection;
@@ -291,4 +381,88 @@ function printItem() {
     video.setAttribute("height", "500");
 
 
+}
+
+function deleteItem() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('id');
+    var data = JSON.parse(window.localStorage.getItem("data"));
+    var position = parseInt(code[1] + code[2]);
+    if (code[0] == 'p') {
+        data.people.splice(position, 1);
+    } else if (code[0] == 'e') {
+        data.entities.splice(position, 1);
+    } else {
+        data.products.splice(position, 1);
+    }
+    calculateID(data);
+    window.localStorage.setItem("data", JSON.stringify(data));
+    location = "writer.html";
+    return false;
+}
+
+
+function loadData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('id');
+    var item = searchItemId(code);
+
+    var type = document.getElementById("type");
+    type.value = code[0];
+    type.setAttribute("disabled","true")
+
+    var name = document.getElementById("name");
+    name.value = item.name;
+
+    var date = document.getElementById("date");
+    date.value = item.date;
+
+    var date1 = document.getElementById("date1");
+
+    var picture = document.getElementById("picture");
+    picture.value = item.picture;
+
+    var wiki = document.getElementById("wiki");
+    wiki.value = item.wiki;
+}
+
+function edit(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('id');
+    var data = JSON.parse(window.localStorage.getItem("data"));
+
+    if (code[0]=='p'){
+        for(item of data.people){
+            if(item.id == code){
+                item.name = document.getElementById("name").value;
+                item.date = document.getElementById("date").value;
+                item.date1= document.getElementById("date1").value;
+                item.picture = document.getElementById("picture").value;
+                item.wiki = document.getElementById("wiki").value;
+            }
+        }
+    }else if (code[0]=='e'){
+        for(item of data.entities){
+            if(item.id == code){
+                item.name = document.getElementById("name").value;
+                item.date = document.getElementById("date").value;
+                item.date1= document.getElementById("date1").value;
+                item.picture = document.getElementById("picture").value;
+                item.wiki = document.getElementById("wiki").value;
+            }
+        }
+    }else{
+        for(item of data.products){
+            if(item.id == code){
+                item.name = document.getElementById("name").value;
+                item.date = document.getElementById("date").value;
+                item.date1= document.getElementById("date1").value;
+                item.picture = document.getElementById("picture").value;
+                item.wiki = document.getElementById("wiki").value;
+            }
+        }
+    }
+    window.localStorage.setItem("data", JSON.stringify(data));
+    location = "writer.html";
+    return false;
 }
