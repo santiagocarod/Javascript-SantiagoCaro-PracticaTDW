@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Santiago Caro Duque</title>
+    <link rel="icon" href="https://i.ya-webdesign.com/images/white-letter-s-png-3.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="./code.js"></script>
+</head>
+
+<body onload="printUser();validate();">
+    <div id="title" class="container-sm">
+        <h1>
+            <center>Tecnologias & Internet</center>
+        </h1>
+        <br>
+    </div>
+    <br>
+    <br>
+    <div id="containerForm" class="container-sm">
+        <form id="editForm" action="./writer.html" onsubmit="return saveNew();">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="type">Tipo: </label>
+                    </div>
+                    <div class="col-sm">
+                        <label for="name">Nombre: </label>
+                    </div>
+                    <div class="col-sm">
+                        <label for="date">Fecha de Nacimiento/Creacion: </label>
+                    </div>
+                    <div class="col-sm">
+                        <label for="date1">Fecha de defunción/terminación: </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <select id="type" class="custom-select custom-select">
+                            <option class="dropdown-item" value="p">Persona</option>
+                            <option class="dropdown-item" value="e">Entidad</option>
+                            <option class="dropdown-item" value="r">Producto</option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <input id="name" class="form-control" type="text" placeholder="Nombre">
+                    </div>
+                    <div class="col-sm">
+                        <input id="date"class="form-control" type="text" placeholder="Fecha de Nacimiento">
+                    </div>
+                    <div class="col-sm">
+                        <input id="date1" class="form-control" type="text" placeholder="0 en caso de que siga vivo">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="picture">Dirección de la imagen: </label>
+                    </div>
+                    <div class="col-sm">
+                        <label for="wiki">Dirección de la Wiki: </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <input id="picture"class="form-control" type="url" placeholder="Imagen">
+                    </div>
+                    <div class="col-sm">
+                        <input id="wiki" class="form-control" type="url" placeholder="Wiki">
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Guardar</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -29,16 +29,14 @@ function load() {
                 name: "Tim Berners-Lee",
                 date: "8 de Junio de 1955",
                 picture: "https://s2.latercera.com/wp-content/uploads/2018/12/Tim.jpg",
-                wiki: "https://en.wikipedia.org/wiki/Tim_Berners-Lee",
-                video: "https://www.youtube.com/embed/OM6XIICm_qo"
+                wiki: "https://en.wikipedia.org/wiki/Tim_Berners-Lee"
 
             },
             {
                 name: "Richard Stallman",
                 date: "16 de Marzo 1953",
                 picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS7x0V2_5oVEfi3gW6P8PhAxkdXZMJKK-Qo-xRoKuB6Xb_K5fuE",
-                wiki: "https://en.wikipedia.org/wiki/Richard_Stallman-Lee",
-                video: "https://www.youtube.com/embed/Gnw_K5DPkbc"
+                wiki: "https://en.wikipedia.org/wiki/Richard_Stallman-Lee"
 
             },
         ],
@@ -46,16 +44,14 @@ function load() {
                 name: "World Wide Web Consortium",
                 date: "1 de Octubre de 1994",
                 picture: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2018/10/18/w3c_logo-800x400.jpg",
-                wiki: "https://en.wikipedia.org/wiki/World_Wide_Web_Consortium",
-                video: "https://www.youtube.com/embed/20SHvU2PKsM"
+                wiki: "https://en.wikipedia.org/wiki/World_Wide_Web_Consortium"
 
             },
             {
                 name: "Free Software Fundation",
                 date: "14 de Octubre de 1985",
                 picture: "https://pbs.twimg.com/profile_images/471735621946314752/imENUbEK_400x400.png",
-                wiki: "https://en.wikipedia.org/wiki/Free_Software_Foundation",
-                video: "https://www.youtube.com/embed/AgjoWc-_y6Q"
+                wiki: "https://en.wikipedia.org/wiki/Free_Software_Foundation"
 
             },
         ],
@@ -63,16 +59,14 @@ function load() {
                 name: "HyperText Markup Language",
                 date: "1993",
                 picture: "https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png",
-                wiki: "https://en.wikipedia.org/wiki/HTML",
-                video: "https://www.youtube.com/embed/7OghSdE6gfI"
+                wiki: "https://en.wikipedia.org/wiki/HTML"
 
             },
             {
                 name: "GNU / Linux",
                 date: "17 de Septiembre 1991",
                 picture: "https://www.wallpaperflare.com/static/893/596/940/tux-linux-foxyriot-logo-wallpaper.jpg",
-                wiki: "https://en.wikipedia.org/wiki/Linux",
-                video: "https://www.youtube.com/embed/zA3vmx0GaO8"
+                wiki: "https://en.wikipedia.org/wiki/Linux"
 
             },
         ]
@@ -88,28 +82,28 @@ function calculateID(data) {
     for (item of data.people) {
         var id = "p";
         if (count < 10) {
-           id = id+"0";
+            id = id + "0";
         }
-        item["id"]=id+count;
-        count = count+1;
+        item["id"] = id + count;
+        count = count + 1;
     }
     count = 0;
     for (item of data.entities) {
         var id = "e";
         if (count < 10) {
-           id = id+"0";
+            id = id + "0";
         }
-        item["id"]=id+count;
-        count = count+1;
+        item["id"] = id + count;
+        count = count + 1;
     }
     count = 0;
     for (item of data.products) {
         var id = "r";
         if (count < 10) {
-           id = id+"0";
+            id = id + "0";
         }
-        item["id"]=id+count;
-        count = count+1;
+        item["id"] = id + count;
+        count = count + 1;
     }
 }
 
@@ -365,22 +359,6 @@ function printItem() {
     divIframe.appendChild(wiki);
     wiki.setAttribute("src", item.wiki);
     wiki.setAttribute("class", "embed-responsive-item");
-
-    var videosTitle = document.createElement("h4");
-    body.appendChild(videosTitle);
-    videosTitle.innerHTML = "<br>Videos";
-
-    var divIframeVideo = document.createElement("div");
-    body.appendChild(divIframeVideo);
-    divIframe.setAttribute("class", "embed-responsive embed-responsive-16by9")
-
-    var video = document.createElement("iframe");
-    divIframeVideo.appendChild(video);
-    video.setAttribute("src", item.video);
-    video.setAttribute("class", "embed-responsive embed-responsive-16by9")
-    video.setAttribute("height", "500");
-
-
 }
 
 function deleteItem() {
@@ -409,7 +387,7 @@ function loadData() {
 
     var type = document.getElementById("type");
     type.value = code[0];
-    type.setAttribute("disabled","true")
+    //type.setAttribute("disabled", "true")
 
     var name = document.getElementById("name");
     name.value = item.name;
@@ -426,43 +404,95 @@ function loadData() {
     wiki.value = item.wiki;
 }
 
-function edit(){
+function edit() {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('id');
     var data = JSON.parse(window.localStorage.getItem("data"));
+    type = document.getElementById("type").value;
+    if (code[0] == type) {
+        if (code[0] == 'p') {
+            for (item of data.people) {
+                if (item.id == code) {
+                    item.name = document.getElementById("name").value;
+                    item.date = document.getElementById("date").value;
+                    item.date1 = document.getElementById("date1").value;
+                    item.picture = document.getElementById("picture").value;
+                    item.wiki = document.getElementById("wiki").value;
+                }
+            }
+        } else if (code[0] == 'e') {
+            for (item of data.entities) {
+                if (item.id == code) {
+                    item.name = document.getElementById("name").value;
+                    item.date = document.getElementById("date").value;
+                    item.date1 = document.getElementById("date1").value;
+                    item.picture = document.getElementById("picture").value;
+                    item.wiki = document.getElementById("wiki").value;
+                }
+            }
+        } else {
+            for (item of data.products) {
+                if (item.id == code) {
+                    item.name = document.getElementById("name").value;
+                    item.date = document.getElementById("date").value;
+                    item.date1 = document.getElementById("date1").value;
+                    item.picture = document.getElementById("picture").value;
+                    item.wiki = document.getElementById("wiki").value;
+                }
+            }
+        }
+    } else {
+        var newItem = new Object;
+        newItem.name = document.getElementById("name").value;
+        newItem.date = document.getElementById("date").value;
+        newItem.date1 = document.getElementById("date1").value;
+        newItem.picture = document.getElementById("picture").value;
+        newItem.wiki = document.getElementById("wiki").value;
+        console.log(newItem);
+        var type = document.getElementById("type").value;
+        if (type == "p") {
+            data.people.push(newItem);
+        } else if (type == "e") {
+            data.entities.push(newItem);
+        } else {
+            data.products.push(newItem);
+        }
+        var position = parseInt(code[1] + code[2]);
+        if (code[0] == 'p') {
+            data.people.splice(position, 1);
+        } else if (code[0] == 'e') {
+            data.entities.splice(position, 1);
+        } else {
+            data.products.splice(position, 1);
+        }
+        calculateID(data);
 
-    if (code[0]=='p'){
-        for(item of data.people){
-            if(item.id == code){
-                item.name = document.getElementById("name").value;
-                item.date = document.getElementById("date").value;
-                item.date1= document.getElementById("date1").value;
-                item.picture = document.getElementById("picture").value;
-                item.wiki = document.getElementById("wiki").value;
-            }
-        }
-    }else if (code[0]=='e'){
-        for(item of data.entities){
-            if(item.id == code){
-                item.name = document.getElementById("name").value;
-                item.date = document.getElementById("date").value;
-                item.date1= document.getElementById("date1").value;
-                item.picture = document.getElementById("picture").value;
-                item.wiki = document.getElementById("wiki").value;
-            }
-        }
-    }else{
-        for(item of data.products){
-            if(item.id == code){
-                item.name = document.getElementById("name").value;
-                item.date = document.getElementById("date").value;
-                item.date1= document.getElementById("date1").value;
-                item.picture = document.getElementById("picture").value;
-                item.wiki = document.getElementById("wiki").value;
-            }
-        }
+
     }
+
     window.localStorage.setItem("data", JSON.stringify(data));
     location = "writer.html";
     return false;
+}
+
+function saveNew() {
+    var data = JSON.parse(window.localStorage.getItem("data"));
+    var newItem = new Object;
+    newItem.name = document.getElementById("name").value;
+    newItem.date = document.getElementById("date").value;
+    newItem.date1 = document.getElementById("date1").value;
+    newItem.picture = document.getElementById("picture").value;
+    newItem.wiki = document.getElementById("wiki").value;
+    console.log(newItem);
+    var type = document.getElementById("type").value;
+    if (type == "p") {
+        data.people.push(newItem);
+    } else if (type == "e") {
+        data.entities.push(newItem);
+    } else {
+        data.products.push(newItem);
+    }
+    calculateID(data);
+    window.localStorage.setItem("data", JSON.stringify(data));
+    return true;
 }
