@@ -4,13 +4,13 @@ function load() {
                 key: 1,
                 name: "m",
                 password: "m",
-                type: "reader"
+                type: "writer"
             },
             {
                 key: 2,
                 name: "a",
                 password: "a",
-                type: "reader"
+                type: "writer"
             },
             {
                 key: 3,
@@ -90,14 +90,6 @@ function logged() {
     return JSON.parse(window.localStorage.getItem("loggedIn")) != null
 }
 
-function role() {
-    if (logged()) {
-        return JSON.parse(window.localStorage.getItem("loggedIn")).type;
-    } else {
-        return null;
-    }
-}
-
 function validate() {
     if (!logged()) {
         var body = document.getElementsByTagName("body")[0];
@@ -111,39 +103,34 @@ function validate() {
 function printUser() {
     var title = document.getElementById("title");
     var user = JSON.parse(window.localStorage.getItem("loggedIn"));
+
+    var div1 = document.createElement("div");
+    title.appendChild(div1);
+    div1.setAttribute("class", "container");
+
+    var div2 = document.createElement("div");
+    div1.appendChild(div2)
+    div2.setAttribute("class", "row");
+
+    var divHome = document.createElement("div");
+    div2.appendChild(divHome);
+    divHome.setAttribute("class", "col-sm");
+    var homeButton = document.createElement("button");
+    divHome.appendChild(homeButton);
+    homeButton.innerHTML = "Inicio";
+    homeButton.setAttribute("class", "btn btn-secondary")
     if (user != null) {
-        var div1 = document.createElement("div");
-        title.appendChild(div1);
-        div1.setAttribute("class", "container");
-
-        var div2 = document.createElement("div");
-        div1.appendChild(div2)
-        div2.setAttribute("class", "row");
-
-        var divHome = document.createElement("div");
-        div2.appendChild(divHome);
-        divHome.setAttribute("class", "col-sm");
-        var homeButton = document.createElement("button");
-        divHome.appendChild(homeButton);
-        homeButton.innerHTML="Inicio";
-        homeButton.setAttribute("class","btn btn-secondary")
-
+        homeButton.setAttribute("onclick", "location.href=\"writer.html\"")
+   
         var divWelcome = document.createElement("div");
         div2.appendChild(divWelcome);
         divWelcome.setAttribute("class", "col-sm");
 
-        var role = user.type;
-        if (role == "writer"){
-            role= "Escritor"
-            homeButton.setAttribute("onclick","location.href=\"writer.html\"");
-        }else{
-            role="Lector"
-            homeButton.setAttribute("onclick","location.href=\"reader.html\"");
-        }
         var username = user.name;
         var welcomeMessage = document.createElement("h5");
         divWelcome.appendChild(welcomeMessage);
-        welcomeMessage.innerHTML = "<b>Bienvenido </b>" + username + ", " + role;
+
+        welcomeMessage.innerHTML = "<b><center>Bienvenido </b>" + username;
 
         var divButton = document.createElement("div");
         div2.appendChild(divButton);
@@ -155,6 +142,9 @@ function printUser() {
         form.appendChild(logOutButton);
         logOutButton.setAttribute("class", "btn btn-secondary float-right");
         logOutButton.innerHTML = "Salir";
+    }
+    else{
+        homeButton.setAttribute("onclick", "location.href=\"index.html\"")
     }
 }
 
@@ -170,11 +160,8 @@ function enter() {
         login.action = "./index.html";
     } else {
         window.localStorage.setItem("loggedIn", JSON.stringify(user));
-        if (user.type == "reader") {
-            login.action = "./reader.html";
-        } else {
-            login.action = "./writer.html";
-        }
+        login.action = "./writer.html";
+
     }
     return user != null;
 }
@@ -194,47 +181,6 @@ function logout() {
     window.localStorage.setItem("loggedIn", null);
     return false;
 }
-
-function listTables() {
-    var data = JSON.parse(window.localStorage.getItem("data"));
-    displayItems(data.people, "people");
-    displayItems(data.entities, "entities");
-    displayItems(data.products, "products");
-}
-
-function displayItems(collection, type) {
-    var column = document.getElementById(type + "Column");
-    var table = document.createElement("table");
-    table.setAttribute("id", type + "Table");
-    table.setAttribute("class", "table");
-    column.appendChild(table);
-    var tableHeader = document.createElement("thead");
-    table.appendChild(tableHeader);
-    tableHeader.setAttribute("class", "thead-dark");
-    var tableRow = document.createElement("tr");
-    tableHeader.appendChild(tableRow);
-    var header = document.createElement("th");
-    tableRow.appendChild(header);
-    header.setAttribute("scope", "col");
-    if (type == "people") {
-        var title = "Personas";
-    } else if (type == "entities") {
-        var title = "Entidades";
-    } else {
-        var title = "Productos";
-    }
-    header.innerHTML = title;
-    var tableBody = document.createElement("tbody");
-    table.appendChild(tableBody);
-    for (item of collection) {
-        var tableRow = document.createElement("tr")
-        tableBody.appendChild(tableRow);
-        var tableData = document.createElement("td");
-        tableRow.appendChild(tableData);
-        tableData.innerHTML = item.name;
-    }
-}
-
 
 function listTablesReader() {
     var data = JSON.parse(window.localStorage.getItem("data"));
@@ -300,7 +246,7 @@ function searchItemId(code) {
 }
 
 function printItem() {
-    
+
     var title = document.getElementById("title");
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('id');
@@ -309,9 +255,9 @@ function printItem() {
     h1.innerHTML = searchItemId(code).name;
 
     var picture = document.getElementById("picture");
-    picture.setAttribute("src",item.picture);
+    picture.setAttribute("src", item.picture);
 
-    var date=document.getElementById("date");
+    var date = document.getElementById("date");
     var dateInfo = document.createElement("h5");
     date.appendChild(dateInfo);
     dateInfo.innerHTML = item.date;
@@ -323,12 +269,12 @@ function printItem() {
 
     var divIframe = document.createElement("div");
     body.appendChild(divIframe);
-    divIframe.setAttribute("class","embed-responsive embed-responsive-16by9")
+    divIframe.setAttribute("class", "embed-responsive embed-responsive-16by9")
 
     var wiki = document.createElement("iframe");
     divIframe.appendChild(wiki);
-    wiki.setAttribute("src",item.wiki);
-    wiki.setAttribute("class","embed-responsive-item");
+    wiki.setAttribute("src", item.wiki);
+    wiki.setAttribute("class", "embed-responsive-item");
 
     var videosTitle = document.createElement("h4");
     body.appendChild(videosTitle);
@@ -336,13 +282,13 @@ function printItem() {
 
     var divIframeVideo = document.createElement("div");
     body.appendChild(divIframeVideo);
-    divIframe.setAttribute("class","embed-responsive embed-responsive-16by9")
+    divIframe.setAttribute("class", "embed-responsive embed-responsive-16by9")
 
     var video = document.createElement("iframe");
     divIframeVideo.appendChild(video);
-    video.setAttribute("src",item.video);
-    video.setAttribute("class","embed-responsive embed-responsive-16by9")
-    video.setAttribute("height","500");
+    video.setAttribute("src", item.video);
+    video.setAttribute("class", "embed-responsive embed-responsive-16by9")
+    video.setAttribute("height", "500");
 
 
 }
