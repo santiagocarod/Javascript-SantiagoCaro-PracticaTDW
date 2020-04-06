@@ -114,17 +114,32 @@ function printUser() {
     if (user != null) {
         var div1 = document.createElement("div");
         title.appendChild(div1);
-        div1.setAttribute("class","container");
+        div1.setAttribute("class", "container");
 
         var div2 = document.createElement("div");
         div1.appendChild(div2)
-        div2.setAttribute("class","row");
+        div2.setAttribute("class", "row");
+
+        var divHome = document.createElement("div");
+        div2.appendChild(divHome);
+        divHome.setAttribute("class", "col-sm");
+        var homeButton = document.createElement("button");
+        divHome.appendChild(homeButton);
+        homeButton.innerHTML="Inicio";
+        homeButton.setAttribute("class","btn btn-secondary")
 
         var divWelcome = document.createElement("div");
         div2.appendChild(divWelcome);
-        divWelcome.setAttribute("class","col-sm");
+        divWelcome.setAttribute("class", "col-sm");
 
         var role = user.type;
+        if (role == "writer"){
+            role= "Escritor"
+            homeButton.setAttribute("onclick","location.href=\"writer.html\"");
+        }else{
+            role="Lector"
+            homeButton.setAttribute("onclick","location.href=\"reader.html\"");
+        }
         var username = user.name;
         var welcomeMessage = document.createElement("h5");
         divWelcome.appendChild(welcomeMessage);
@@ -132,14 +147,14 @@ function printUser() {
 
         var divButton = document.createElement("div");
         div2.appendChild(divButton);
-        divButton.setAttribute("class","col-sm");
+        divButton.setAttribute("class", "col-sm");
         var form = document.createElement("form")
         divButton.appendChild(form);
-        form.setAttribute("onsubmit","return logout();");
+        form.setAttribute("onsubmit", "return logout();");
         var logOutButton = document.createElement("button");
         form.appendChild(logOutButton);
-        logOutButton.setAttribute("class","btn btn-secondary float-right");
-        logOutButton.innerHTML="Salir";
+        logOutButton.setAttribute("class", "btn btn-secondary float-right");
+        logOutButton.innerHTML = "Salir";
     }
 }
 
@@ -150,8 +165,8 @@ function enter() {
     var password = document.getElementById("pwd").value;
     var user = validateUser(data, username, password);
     if (user == null) {
-        username.value = username;
-        password.value = password;
+        username.value = "";
+        password.value = "";
         login.action = "./index.html";
     } else {
         window.localStorage.setItem("loggedIn", JSON.stringify(user));
@@ -259,24 +274,24 @@ function displayItemsReader(collection, type) {
         tableRow.appendChild(tableData);
         var link = document.createElement("a");
         tableData.appendChild(link);
-        link.setAttribute("href","/displayItem.html?id="+item.id);
+        link.setAttribute("href", "/displayItem.html?id=" + item.id);
         link.innerHTML = item.name;
     }
 }
 
-function searchItemId(code){
+function searchItemId(code) {
     var data = JSON.parse(window.localStorage.getItem("data"));
     var collection;
-    if (code[0]=='p'){
+    if (code[0] == 'p') {
         collection = data.people;
-    }else if (code[0]=='e'){
-        collection= data.entities;
-    }else{
-        collection=data.products;
+    } else if (code[0] == 'e') {
+        collection = data.entities;
+    } else {
+        collection = data.products;
     }
 
-    for (item of collection){
-        if(item.id ==code){
+    for (item of collection) {
+        if (item.id == code) {
             return item;
         }
     }
@@ -284,12 +299,50 @@ function searchItemId(code){
 
 }
 
-function printItem(){
-    var body = document.getElementById("body");
+function printItem() {
+    
+    var title = document.getElementById("title");
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('id');
     var h1 = document.createElement("h1");
-    body.appendChild(h1);
+    title.appendChild(h1);
     h1.innerHTML = searchItemId(code).name;
+
+    var picture = document.getElementById("picture");
+    picture.setAttribute("src",item.picture);
+
+    var date=document.getElementById("date");
+    var dateInfo = document.createElement("h5");
+    date.appendChild(dateInfo);
+    dateInfo.innerHTML = item.date;
+
+    var body = document.getElementById("wiki");
+    var wikiTitle = document.createElement("h4");
+    body.appendChild(wikiTitle);
+    wikiTitle.innerHTML = "<br>Wiki";
+
+    var divIframe = document.createElement("div");
+    body.appendChild(divIframe);
+    divIframe.setAttribute("class","embed-responsive embed-responsive-16by9")
+
+    var wiki = document.createElement("iframe");
+    divIframe.appendChild(wiki);
+    wiki.setAttribute("src",item.wiki);
+    wiki.setAttribute("class","embed-responsive-item");
+
+    var videosTitle = document.createElement("h4");
+    body.appendChild(videosTitle);
+    videosTitle.innerHTML = "<br>Videos";
+
+    var divIframeVideo = document.createElement("div");
+    body.appendChild(divIframeVideo);
+    divIframe.setAttribute("class","embed-responsive embed-responsive-16by9")
+
+    var video = document.createElement("iframe");
+    divIframeVideo.appendChild(video);
+    video.setAttribute("src",item.video);
+    video.setAttribute("class","embed-responsive embed-responsive-16by9")
+    video.setAttribute("height","500");
+
 
 }
