@@ -15,7 +15,7 @@
     <script src="./code.js"></script>
 </head>
 
-<body onload="printUser();validate();loadData();">
+<body onload="printUser();validate();loadData();loadRelOptions();">
     <div id="title" class="container-sm">
         <h1>
             <center>Tecnologias & Internet</center>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm">
-                        <select id="type" class="custom-select custom-select">
+                        <select id="type" class="custom-select custom-select" onchange="loadRelOptions();">
                             <option class="dropdown-item" value="p">Persona</option>
                             <option class="dropdown-item" value="e">Entidad</option>
                             <option class="dropdown-item" value="r">Producto</option>
@@ -56,7 +56,7 @@
                         <input id="date"class="form-control" type="text" placeholder="Fecha de Nacimiento">
                     </div>
                     <div class="col-sm">
-                        <input id="date1" class="form-control" type="text" placeholder="0 en caso de que siga vivo">
+                        <input id="date1" class="form-control" type="text" placeholder="vacio en caso de que siga vivo">
                     </div>
                 </div>
                 <br>
@@ -78,14 +78,7 @@
                 </div>
                 <br>
                 <br>
-                <!--<div class="row">
-                    <div class="col-sm">
-                        <img width="100" id="imgPre">
-                    </div>
-                    <div class="col-sm">
-                        <iframe id="wikiPre"></iframe>
-                    </div>
-                </div>-->
+                <div id="addRelations"></div>
             </div>
             <button type="submit" class="btn btn-outline-success">Guardar</button>
         </form>

@@ -28,45 +28,56 @@ function load() {
         people: [{
                 name: "Tim Berners-Lee",
                 date: "8 de Junio de 1955",
+                date1: "",
                 picture: "https://s2.latercera.com/wp-content/uploads/2018/12/Tim.jpg",
-                wiki: "https://en.wikipedia.org/wiki/Tim_Berners-Lee"
-
+                wiki: "https://en.wikipedia.org/wiki/Tim_Berners-Lee",
+                relations: ["e00", "r00"]
             },
             {
                 name: "Richard Stallman",
                 date: "16 de Marzo 1953",
+                date1: "",
                 picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS7x0V2_5oVEfi3gW6P8PhAxkdXZMJKK-Qo-xRoKuB6Xb_K5fuE",
-                wiki: "https://en.wikipedia.org/wiki/Richard_Stallman-Lee"
+                wiki: "https://en.wikipedia.org/wiki/Richard_Stallman-Lee",
+                relations: []
 
             },
         ],
         entities: [{
                 name: "World Wide Web Consortium",
                 date: "1 de Octubre de 1994",
+                date1: "",
                 picture: "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2018/10/18/w3c_logo-800x400.jpg",
-                wiki: "https://en.wikipedia.org/wiki/World_Wide_Web_Consortium"
+                wiki: "https://en.wikipedia.org/wiki/World_Wide_Web_Consortium",
+                relations: []
 
             },
             {
                 name: "Free Software Fundation",
                 date: "14 de Octubre de 1985",
+                date1: "",
                 picture: "https://pbs.twimg.com/profile_images/471735621946314752/imENUbEK_400x400.png",
-                wiki: "https://en.wikipedia.org/wiki/Free_Software_Foundation"
+                wiki: "https://en.wikipedia.org/wiki/Free_Software_Foundation",
+                relations: []
 
             },
         ],
         products: [{
                 name: "HyperText Markup Language",
                 date: "1993",
+                date1: "",
                 picture: "https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png",
-                wiki: "https://en.wikipedia.org/wiki/HTML"
+                wiki: "https://en.wikipedia.org/wiki/HTML",
+                relations: ["p00", "e00"]
 
             },
             {
                 name: "GNU / Linux",
                 date: "17 de Septiembre 1991",
+                date1: "",
                 picture: "https://www.wallpaperflare.com/static/893/596/940/tux-linux-foxyriot-logo-wallpaper.jpg",
-                wiki: "https://en.wikipedia.org/wiki/Linux"
+                wiki: "https://en.wikipedia.org/wiki/Linux",
+                relations: []
 
             },
         ]
@@ -336,7 +347,8 @@ function printItem() {
     const code = urlParams.get('id');
     var h1 = document.createElement("h1");
     title.appendChild(h1);
-    h1.innerHTML = searchItemId(code).name;
+    var item = searchItemId(code);
+    h1.innerHTML = item.name;
 
     var picture = document.getElementById("picture");
     picture.setAttribute("src", item.picture);
@@ -344,7 +356,13 @@ function printItem() {
     var date = document.getElementById("date");
     var dateInfo = document.createElement("h5");
     date.appendChild(dateInfo);
-    dateInfo.innerHTML = item.date;
+    dateInfo.innerHTML = "<b>Fecha de Creacion/Nacimiento:</b> <br>" + item.date;
+
+    if (item.date1 != "") {
+        var dateDeathInfo = document.createElement("h5");
+        date.appendChild(dateDeathInfo);
+        dateDeathInfo.innerHTML = "<b>Fecha de Terminación/Fallecimiento:</b> <br>" + item.date1;
+    }
 
     var body = document.getElementById("wiki");
     var wikiTitle = document.createElement("h4");
@@ -359,6 +377,33 @@ function printItem() {
     divIframe.appendChild(wiki);
     wiki.setAttribute("src", item.wiki);
     wiki.setAttribute("class", "embed-responsive-item");
+
+    var relContainer = document.getElementById("relationContainer");
+    var column1 = document.getElementById("relation1");
+    if (code[0] == 'r' || code[0] == 'e') {
+        document.getElementById("relationTitle").innerHTML = "<center>Relaciones";
+
+        printRelations(column1, item.relations, "p");
+        if (code[0] == 'r') {
+            var column2 = document.getElementById("relation2");
+            printRelations(column2, item.relations, "e")
+        }
+    }
+
+}
+
+function printRelations(column, relations, searching) {
+    for (i of relations) {
+        if (i[0] == searching) {
+            var a = document.createElement("a")
+            column.appendChild(a)
+            var relation = searchItemId(i);
+            a.innerHTML = relation.name;
+            a.setAttribute("href", "/displayItem.html?id=" + relation.id);
+            var br = document.createElement("br")
+            column.appendChild(br)
+        }
+    }
 }
 
 function deleteItem() {
@@ -396,6 +441,7 @@ function loadData() {
     date.value = item.date;
 
     var date1 = document.getElementById("date1");
+    date1.value = item.date1
 
     var picture = document.getElementById("picture");
     picture.value = item.picture;
@@ -418,6 +464,7 @@ function edit() {
                     item.date1 = document.getElementById("date1").value;
                     item.picture = document.getElementById("picture").value;
                     item.wiki = document.getElementById("wiki").value;
+                    item.relations = getSelectedRelations();
                 }
             }
         } else if (code[0] == 'e') {
@@ -428,6 +475,7 @@ function edit() {
                     item.date1 = document.getElementById("date1").value;
                     item.picture = document.getElementById("picture").value;
                     item.wiki = document.getElementById("wiki").value;
+                    item.relations = getSelectedRelations();
                 }
             }
         } else {
@@ -438,6 +486,7 @@ function edit() {
                     item.date1 = document.getElementById("date1").value;
                     item.picture = document.getElementById("picture").value;
                     item.wiki = document.getElementById("wiki").value;
+                    item.relations = getSelectedRelations();
                 }
             }
         }
@@ -448,7 +497,7 @@ function edit() {
         newItem.date1 = document.getElementById("date1").value;
         newItem.picture = document.getElementById("picture").value;
         newItem.wiki = document.getElementById("wiki").value;
-        console.log(newItem);
+        newItem.relations = getSelectedRelations();
         var type = document.getElementById("type").value;
         if (type == "p") {
             data.people.push(newItem);
@@ -483,6 +532,7 @@ function saveNew() {
     newItem.date1 = document.getElementById("date1").value;
     newItem.picture = document.getElementById("picture").value;
     newItem.wiki = document.getElementById("wiki").value;
+    newItem.relations = getSelectedRelations();
     console.log(newItem);
     var type = document.getElementById("type").value;
     if (type == "p") {
@@ -495,4 +545,125 @@ function saveNew() {
     calculateID(data);
     window.localStorage.setItem("data", JSON.stringify(data));
     return true;
+}
+
+function loadRelOptions() {
+    var type = document.getElementById("type");
+    var relDiv = document.getElementById("addRelations");
+    var data = JSON.parse(window.localStorage.getItem("data"));
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('id');
+    var general = null;
+    if (code != null) {
+        general = searchItemId(code);
+    }
+    if (type.value == 'e' || type.value == 'r') {
+        relDiv.innerHTML = "";
+        var h5 = document.createElement("h5");
+        relDiv.appendChild(h5);
+        h5.innerHTML = "Añadir Relaciones"
+        var h6 = document.createElement("h6");
+        relDiv.appendChild(h6);
+        h6.innerHTML = "Personas: "
+
+        var div = document.createElement("div");
+        relDiv.appendChild(div);
+        div.setAttribute("class", "btn-group");
+        div.setAttribute("data-toggle", "buttons");
+
+        for (person of data.people) {
+
+            var div1 = document.createElement("div");
+            relDiv.appendChild(div1);
+            div1.setAttribute("class", "input-group mb-3")
+            var div2 = document.createElement("div");
+            div1.appendChild(div2);
+            div2.setAttribute("class", "input-group-prepend");
+
+
+            var div3 = document.createElement("div");
+            div2.appendChild(div3);
+            div3.setAttribute("class", "input-group-text");
+
+            var input = document.createElement("input");
+            div3.appendChild(input);
+            input.setAttribute("type", "checkbox")
+            input.setAttribute("class", "relation");
+            if (general != null) {
+                for (relation of general.relations) {
+                    if (relation == person.id) {
+                        input.checked = true;
+                    }
+
+                }
+            }
+            input.setAttribute("value", person.id);
+
+            var label = document.createElement("input");
+            div1.appendChild(label);
+            label.setAttribute("class", "form-control");
+            label.setAttribute("type", "text");
+            label.value = person.name;
+            label.setAttribute("disabled", "true");
+
+        }
+        if (type.value == 'r') {
+            var h62 = document.createElement("h6");
+            relDiv.appendChild(h62);
+            h62.innerHTML = "Entidades: ";
+
+
+
+            for (entity of data.entities) {
+                var div1 = document.createElement("div");
+                relDiv.appendChild(div1);
+                div1.setAttribute("class", "input-group mb-3")
+
+                var div2 = document.createElement("div");
+                div1.appendChild(div2);
+                div2.setAttribute("class", "input-group-prepend");
+
+
+                var div3 = document.createElement("div");
+                div2.appendChild(div3);
+                div3.setAttribute("class", "input-group-text");
+
+                var input = document.createElement("input");
+                div3.appendChild(input);
+                input.setAttribute("type", "checkbox")
+                input.setAttribute("class", "relation");
+                if (general != null) {
+                    for (relation of general.relations) {
+                        if (relation == entity.id) {
+                            input.checked = true;
+                        }
+
+                    }
+                }
+                input.setAttribute("value", entity.id);
+
+                var label = document.createElement("input");
+                div1.appendChild(label);
+                label.setAttribute("class", "form-control");
+                label.setAttribute("type", "text");
+                label.value = entity.name;
+                label.setAttribute("disabled", "true");
+
+            }
+        }
+
+    } else {
+        relDiv.innerHTML = "";
+    }
+}
+
+function getSelectedRelations() {
+    var relations = [];
+    var checkboxes = document.getElementsByClassName("relation");
+    for (item of checkboxes) {
+        if (item.checked) {
+            relations.push(item.value);
+        }
+    }
+    return relations;
 }

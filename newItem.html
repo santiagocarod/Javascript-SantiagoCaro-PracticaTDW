@@ -43,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm">
-                        <select id="type" class="custom-select custom-select">
+                        <select id="type" class="custom-select custom-select" onchange="loadRelOptions();">
                             <option class="dropdown-item" value="p">Persona</option>
                             <option class="dropdown-item" value="e">Entidad</option>
                             <option class="dropdown-item" value="r">Producto</option>
@@ -53,7 +53,7 @@
                         <input id="name" class="form-control" type="text" placeholder="Nombre">
                     </div>
                     <div class="col-sm">
-                        <input id="date"class="form-control" type="text" placeholder="Fecha de Nacimiento">
+                        <input id="date" class="form-control" type="text" placeholder="Fecha de Nacimiento">
                     </div>
                     <div class="col-sm">
                         <input id="date1" class="form-control" type="text" placeholder="0 en caso de que siga vivo">
@@ -70,17 +70,21 @@
                 </div>
                 <div class="row">
                     <div class="col-sm">
-                        <input id="picture"class="form-control" type="url" placeholder="Imagen">
+                        <input id="picture" class="form-control" type="url" placeholder="Imagen">
                     </div>
                     <div class="col-sm">
                         <input id="wiki" class="form-control" type="url" placeholder="Wiki">
                     </div>
+
                 </div>
                 <br>
                 <br>
+                <div id="addRelations"></div>
             </div>
             <button type="submit" class="btn btn-outline-success">Guardar</button>
-        </form>
+    </div>
+
+    </form>
     </div>
 </body>
 
