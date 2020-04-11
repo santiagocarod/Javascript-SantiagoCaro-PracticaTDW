@@ -25,10 +25,7 @@ function load() {
                 "date1": "",
                 "picture": "https://s2.latercera.com/wp-content/uploads/2018/12/Tim.jpg",
                 "wiki": "https://en.wikipedia.org/wiki/Tim_Berners-Lee",
-                "relations": [
-                    "e00",
-                    "r00"
-                ],
+                "relations": [],
                 "id": "p00"
             },
             {
@@ -489,11 +486,18 @@ function printItem() {
     var relContainer = document.getElementById("relationContainer");
     var column1 = document.getElementById("relation1");
     if (code[0] == 'r' || code[0] == 'e') {
+        var entitiesHeader = document.createElement("h5")
+        column1.appendChild(entitiesHeader)
+        entitiesHeader.innerHTML = "Entidades"
         document.getElementById("relationTitle").innerHTML = "<center>Relaciones";
 
         printRelations(column1, item.relations, "p");
         if (code[0] == 'r') {
             var column2 = document.getElementById("relation2");
+            var productsHeader = document.createElement("h5")
+            column2.appendChild(productsHeader)
+            productsHeader.innerHTML = "Productos"
+            
             printRelations(column2, item.relations, "e")
         }
     }

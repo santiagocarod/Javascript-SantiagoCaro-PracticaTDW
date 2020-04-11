@@ -26,10 +26,7 @@
         "date1": "",
         "picture": "https://s2.latercera.com/wp-content/uploads/2018/12/Tim.jpg",
         "wiki": "https://en.wikipedia.org/wiki/Tim_Berners-Lee",
-        "relations": [
-          "e00",
-          "r00"
-        ],
+        "relations": [],
         "id": "p00"
       },
       {
