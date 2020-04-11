@@ -1,0 +1,195 @@
+{
+    "users": [
+      {
+        "key": 1,
+        "name": "x",
+        "password": "x",
+        "type": "writer"
+      },
+      {
+        "key": 2,
+        "name": "y",
+        "password": "y",
+        "type": "writer"
+      },
+      {
+        "key": 3,
+        "name": "z",
+        "password": "z",
+        "type": "writer"
+      }
+    ],
+    "people": [
+      {
+        "name": "Tim Berners-Lee",
+        "date": "8 de Junio de 1955",
+        "date1": "",
+        "picture": "https://s2.latercera.com/wp-content/uploads/2018/12/Tim.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/Tim_Berners-Lee",
+        "relations": [
+          "e00",
+          "r00"
+        ],
+        "id": "p00"
+      },
+      {
+        "name": "Richard Stallman",
+        "date": "16 de Marzo 1953",
+        "date1": "",
+        "picture": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS7x0V2_5oVEfi3gW6P8PhAxkdXZMJKK-Qo-xRoKuB6Xb_K5fuE",
+        "wiki": "https://en.wikipedia.org/wiki/Richard_Stallman-Lee",
+        "relations": [],
+        "id": "p01"
+      },
+      {
+        "name": "Mark Davis",
+        "date": "13 de Septiembre 1952",
+        "date1": "",
+        "picture": "https://api.time.com/wp-content/uploads/2016/03/mark-davis-unicode-img_27061-page-001.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/Mark_Davis_(Unicode)",
+        "relations": [],
+        "id": "p02"
+      },
+      {
+        "name": "Linus Torvalds",
+        "date": "28 de Diciembre de 1969",
+        "date1": "",
+        "picture": "https://www.channelfutures.com/files/2015/11/linus-torvalds-400x298_0-595x432.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/Linus_Torvalds",
+        "relations": [],
+        "id": "p03"
+      },
+      {
+        "name": "Brendan Eich",
+        "date": "4 de Julio de 1961",
+        "date1": "",
+        "picture": "https://unchainedpodcast.com/wp-content/uploads/2020/01/Brendan-Eich.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/Brendan_Eich",
+        "relations": [],
+        "id": "p04"
+      }
+    ],
+    "entities": [
+      {
+        "name": "World Wide Web Consortium",
+        "date": "1 de Octubre de 1994",
+        "date1": "",
+        "picture": "https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2018/10/18/w3c_logo-800x400.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/World_Wide_Web_Consortium",
+        "relations": [
+          "p00"
+        ],
+        "id": "e00"
+      },
+      {
+        "name": "Free Software Fundation",
+        "date": "14 de Octubre de 1985",
+        "date1": "",
+        "picture": "https://pbs.twimg.com/profile_images/471735621946314752/imENUbEK_400x400.png",
+        "wiki": "https://en.wikipedia.org/wiki/Free_Software_Foundation",
+        "relations": [
+          "p01",
+          "p03"
+        ],
+        "id": "e01"
+      },
+      {
+        "name": "CERN",
+        "date": "14 de Octubre de 1985",
+        "date1": "",
+        "picture": "https://www.eso.org/public/archives/logos/screen/cern.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/CERN",
+        "relations": [
+          "p00"
+        ],
+        "id": "e02"
+      },
+      {
+        "name": "Netscape",
+        "date": "4 de Abril de 1994",
+        "date1": "",
+        "picture": "https://findicons.com/files/icons/1765/windows_icons_v2/256/netscape.png",
+        "wiki": "https://en.wikipedia.org/wiki/Netscape",
+        "relations": [
+          "p02"
+        ],
+        "id": "e03"
+      },
+      {
+        "name": "Unicode Consortium",
+        "date": "3 de Enero de 1991",
+        "date1": "",
+        "picture": "https://home.unicode.org/wp-content/uploads/2019/12/Unicode-Logo-Final-Blue-95x112.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/Unicode_Consortium",
+        "relations": [
+          "p02"
+        ],
+        "id": "e04"
+      }
+    ],
+    "products": [
+      {
+        "name": "HyperText Markup Language",
+        "date": "1993",
+        "date1": "",
+        "picture": "https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png",
+        "wiki": "https://en.wikipedia.org/wiki/HTML",
+        "relations": [
+          "p00",
+          "e00",
+          "e02"
+        ],
+        "id": "r00"
+      },
+      {
+        "name": "GNU / Linux",
+        "date": "17 de Septiembre 1991",
+        "date1": "",
+        "picture": "https://www.wallpaperflare.com/static/893/596/940/tux-linux-foxyriot-logo-wallpaper.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/Linux",
+        "relations": [
+          "p01",
+          "p03",
+          "e01"
+        ],
+        "id": "r01"
+      },
+      {
+        "name": "Arbol Document Object Model",
+        "date": "1 de Octubre de 1998",
+        "date1": "",
+        "picture": "https://www-archive.mozilla.org/docs/dom/technote/whitespace/whitespace_tree.png",
+        "wiki": "https://en.wikipedia.org/wiki/Document_Object_Model",
+        "relations": [
+          "p00",
+          "e00",
+          "e04"
+        ],
+        "id": "r02"
+      },
+      {
+        "name": "JavaScript",
+        "date": "4 de Diciembre de 1995",
+        "date1": "",
+        "picture": "https://logodix.com/logo/374740.png",
+        "wiki": "https://en.wikipedia.org/wiki/Javascript",
+        "relations": [
+          "p02",
+          "e03"
+        ],
+        "id": "r03"
+      },
+      {
+        "name": "Extensible Markup Language",
+        "date": "1998",
+        "date1": "",
+        "picture": "https://png.pngtree.com/png-vector/20190302/ourlarge/pngtree-vector-xml-icon-png-image_719914.jpg",
+        "wiki": "https://en.wikipedia.org/wiki/XML",
+        "relations": [
+          "p02",
+          "e04"
+        ],
+        "id": "r04"
+      }
+    ]
+  }
